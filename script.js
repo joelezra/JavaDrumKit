@@ -10,5 +10,11 @@ function playSound (event) {
     audio.play();
 }
 
-const keys = Array.from(document.getElementsByClassName('keys')); 
+function removeTransition (event) {
+    if (event.propertyName !== 'transform') return; // skip it if it is not a transform
+    this.classList.remove('playing');
+}
+
+const keys = Array.from(document.querySelectorAll('.key')); 
+keys.forEach(key => key.addEventListener('transitionend', removeTransition)); // removes transition to reverse the transform
 window.addEventListener('keydown', playSound); // listens for keydown event to execute playSound function
